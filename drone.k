@@ -4,21 +4,16 @@ module DRONE-SYNTAX
 
   syntax BeforeMove ::= "takeoff"
   syntax FinishMove ::= "land"
-  syntax Action  ::= "forward"
+  syntax Action  ::= Int 
+                   | "forward"
                    | "backward"
-                   | "left"
-                   | "right"
-  
-  syntax Movements ::= List{Action,","}
+
 
   syntax Pgm ::= "takeoff" ";" Movements ";" "land"
 
-  syntax KResult ::= Exp
-  syntax Exp ::= Int | Exp "+" Exp
+  syntax Movements ::= Int | List{Action,","}
 
-  //syntax Position ::= Int 
-  //                  | "takeoff" ";" Action
-  //                  | "forward" "," Action
+  syntax KResult ::= Action | Movements 
                   
 endmodule
 
@@ -32,16 +27,16 @@ module DRONE
                   <state color="red"> .Map </state>
                 </T>
 
- 
-  rule I1 + I2 => I1 +Int I2
+  //rule I1:Int , I2:Int => I1 +Int I2
 
-  //rule "forward" "," AC1 => 1 +Int AC1
-  //rule "forward" ","  => 1 +Int AC1
+  rule <k> takeoff ; Moves ; land => Moves </k>
 
-  rule  <k>takeoff ; (X, Xs => Xs) ; land </k>
+  rule <k> forward , Xs => 1 , Xs </k>
+  rule <k> I1:Int , forward , Xs => I1 +Int 1 , Xs </k> 
+  rule <k> I1:Int , forward => I1 +Int 1 </k> 
 
-  rule  <k>takeoff ; .Movements ; land => "Success" </k>
-
-  //rule .Movements => .  [structural]
+  rule <k> backward , Xs => (-1) , Xs </k> 
+  rule <k> I1:Int , backward , Xs => I1 +Int -1 , Xs </k> 
+  rule <k> I1:Int , backward => I1 +Int -1 </k> 
 
 endmodule
