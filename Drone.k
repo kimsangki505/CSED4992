@@ -29,4 +29,18 @@ module DRONE
   imports DOMAINS
   imports DRONE-SYNTAX
 
+
+
+  configuration <T color="yellow">
+                  <k color="green"> $PGM:Program </k>
+                  <ls color="red"> 0 </ls>
+                  <lh color="red"> 0 </lh>
+                  <xPos color="white"> 0 </xPos>
+                  <yPos color="white"> 0  </yPos>
+                  <xSpeed color="blue"> 0  </xSpeed>
+                  <ySpeed color="blue"> 0 </ySpeed>
+                  <xAcc color="orange"> 0 </xAcc>
+                  <yAcc color="orange"> 0 </yAcc>
+                </T>
+
 endmodule
