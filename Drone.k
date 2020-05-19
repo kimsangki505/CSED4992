@@ -13,8 +13,8 @@ module DRONE-SYNTAX
   syntax Movements ::= List{Movement,","}
 
   syntax Expr ::= Id "=" Expr
-                | "if" Expr "then" Expr "else" Expr "fi"
-                | "while" Expr " loop" Expr "pool"
+                | "if" Expr "then" Expr "else" Expr "fi" [strict(1)]
+                | "while" Expr " loop" Expr "pool"       [strict(1)]
                 | Movements
                 | "readSensor" "(" ")"
                 | Int
@@ -33,7 +33,7 @@ module DRONE
 
   configuration <T color="yellow">
                   <k color="green"> $PGM:Program </k>
-                  <bump color="red"> 0 </bump>
+                  <bump color="red"> false </bump>
                   <ls color="magenta"> 0 </ls>
                   <lh color="magenta"> 0 </lh>
                   <xPos color="white"> 0 </xPos>
@@ -43,5 +43,37 @@ module DRONE
                   <xAcc color="orange"> 0 </xAcc>
                   <yAcc color="orange"> 0 </yAcc>
                 </T>
+
+
+  rule <k> limitSpeed = Int ; limitHeight = Int ; Exprs </k>
+
+  rule <k> Forward Acc </k>
+  rule <k> Backward Acc </k>
+  rule <k> Left Acc </k>
+  rule <k> Right Acc </k>
+  rule <k> Up Acc </k>
+  rule <k> Down Acc </k>
+
+  rule <k> takeoff </k>
+  rule <k> land </k>
+  rule <k> Hovering </k>
+
+  rule <k> M1:Movement , M2:Movement </k>
+  rule <k> .Movements </k>
+
+  rule <k> E1:Expr E2:Expr </k>
+  rule <k> .Exprs </k>
+
+  rule <k> X = Expr </k> 
+
+  rule <k> if true then expr1 else expr2 fi </k> 
+  rule <k> if false then expr1 else expr2 fi </k>
+
+  rule <k> while true loop Expr pool </k>
+  rule <k> while false loop Expr pool </k>
+
+  /*
+                | "readSensor" "(" ")"
+   */
 
 endmodule
