@@ -24,16 +24,16 @@ module DRONE
 
   configuration <T color="yellow">
                   <k color="green"> $PGM:Pgm </k>
-                  <state color="red"> .Map </state>
+                  <state color="red"> 0 </state>
                 </T>
 
   //rule I1:Int , I2:Int => I1 +Int I2
 
-  rule <k> takeoff ; Moves ; land => Moves </k>
+  rule <k> takeoff ; Moves ; land => Moves </k> 
 
-  rule <k> forward , Xs => 1 , Xs </k>
-  rule <k> I1:Int , forward , Xs => I1 +Int 1 , Xs </k> 
-  rule <k> I1:Int , forward => I1 +Int 1 </k> 
+  rule <k> forward , Xs => 1 , Xs </k> <state> T => T +Int 1 </state>
+  rule <k> I1:Int , forward , Xs => I1 +Int 1 , Xs </k> <state> T => T +Int 1 </state>
+  rule <k> I1:Int , forward => I1 +Int 1 </k> <state> T => T +Int 1 </state>
 
   rule <k> backward , Xs => (-1) , Xs </k> 
   rule <k> I1:Int , backward , Xs => I1 +Int -1 , Xs </k> 
