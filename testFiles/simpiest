@@ -1,1 +1,10 @@
-takeoff, forward 0, forward 1,  forward 1, backward 2, backward 1, land
+var n, m, r;
+m = 10 ;
+n = 1 ;
+
+while (n <= 10)
+{
+    n = n + n ;
+}
+
+if (15 <= n ) { r = 1;} else { r = 2; }
