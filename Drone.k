@@ -1,7 +1,7 @@
 module DRONE-SYNTAX
   imports DOMAINS-SYNTAX
 
-  syntax Program ::= "limitSpeed" "=" Int ";" "limitHeight" "=" Int ";" Expr
+  syntax Program ::= "limitSpeed" "=" Int ";" "limitHeight" "=" Int ";" Exprs
   
   syntax Direction ::= "forward" | "backward" | "left" | "right" | "up" | "down"
 
@@ -13,15 +13,13 @@ module DRONE-SYNTAX
   syntax Movments ::= Movement | Movement "," Movments
 
   syntax Expr ::= Movments 
-                | Expr "<" Expr          [strict]
-                | Expr ">" Expr          [strict]
                 | Expr "<=" Expr         [strict]
-                | Expr ">=" Expr         [strict]
                 | Expr "==" Expr         [strict]
                 | Int
                 | Bool
 
-  
+  syntax Exprs ::= List{Expr, " "}
+
   syntax KResult ::= Int | Bool
 
 endmodule
@@ -51,12 +49,9 @@ module DRONE
        <limitheight> 0 => LH </limitheight>
 
 
+
   rule I1 <= I2 => I1 <=Int I2
-  rule I1 <= I2 => I1 <=Int I2
-  rule I1 <= I2 => I1 <=Int I2
-  rule I1 <= I2 => I1 <=Int I2
-  rule I1 <= I2 => I1 <=Int I2
-  rule I1 <= I2 => I1 <=Int I2
+  rule I1 == I2 => I1 <=Int I2
 
 endmodule
  
