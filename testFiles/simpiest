@@ -1,2 +1,4 @@
 limitSpeed = 10 ;
 limitHeight = 10 ;
+
+takeoff, forward 0, forward 1,  forward 1, backward 2, backward 1, land

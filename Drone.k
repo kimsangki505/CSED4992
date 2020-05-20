@@ -1,40 +1,26 @@
 module DRONE-SYNTAX
   imports DOMAINS-SYNTAX
 
-  syntax Program ::= "limitSpeed" "=" Int ";" "limitHeight" "=" Int ";" Exprs
+  syntax Program ::= "limitSpeed" "=" Int ";" "limitHeight" "=" Int ";" Expr
   
-  syntax Direction ::= "Forward" | "Backward" | "Left" | "Right" | "Up" | "Down"
+  syntax Direction ::= "forward" | "backward" | "left" | "right" | "up" | "down"
 
   syntax Movement ::= Direction Int
                     | "takeoff"
                     | "land"
                     | "Hovering"
 
-  syntax Movements ::= List{Movement,","}
+  syntax Movments ::= Movement | Movement "," Movments
 
-  syntax Expr ::= Id "=" Expr
-                | "if" CombinationBool "then" Expr "else" Expr "fi" [strict(1)]
-                | "while" CombinationBool " loop" Expr "pool"       [strict(1)]
-                | Movements
-                | "readSensor" "(" ")"
-                | Id
+  syntax Expr ::= Movments 
+                | Expr "<" Expr          [strict]
+                | Expr ">" Expr          [strict]
+                | Expr "<=" Expr         [strict]
+                | Expr ">=" Expr         [strict]
+                | Expr "==" Expr         [strict]
                 | Int
-  
-  syntax BoolExp ::= Expr "<" Expr          [strict]
-                   | Expr ">" Expr          [strict]
-                   | Expr "<=" Expr         [strict]
-                   | Expr ">=" Expr         [strict]
-                   | Expr "==" Expr         [strict]
-                   | Bool
+                | Bool
 
-  syntax CombinationBool ::= BoolExp
-                         | BoolExp "and" CombinationBool 
-                         | BoolExp "or" CombinationBool
-                         | Bool
-
-  
-
-  syntax Exprs ::= List{Expr," "}
   
   syntax KResult ::= Int | Bool
 
@@ -60,6 +46,17 @@ module DRONE
                 </T>
 
 
-  rule <k> limitSpeed = LS ; limitHeight = LH ; Exprs => Exprs </k>
+  rule <k> limitSpeed = LS ; limitHeight = LH ; Exs => Exs </k>
+       <limitspeed> 0 => LS </limitspeed>
+       <limitheight> 0 => LH </limitheight>
+
+
+  rule I1 <= I2 => I1 <=Int I2
+  rule I1 <= I2 => I1 <=Int I2
+  rule I1 <= I2 => I1 <=Int I2
+  rule I1 <= I2 => I1 <=Int I2
+  rule I1 <= I2 => I1 <=Int I2
+  rule I1 <= I2 => I1 <=Int I2
+
 endmodule
  
