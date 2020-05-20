@@ -13,15 +13,31 @@ module DRONE-SYNTAX
   syntax Movements ::= List{Movement,","}
 
   syntax Expr ::= Id "=" Expr
-                | "if" Expr "then" Expr "else" Expr "fi" [strict(1)]
-                | "while" Expr " loop" Expr "pool"       [strict(1)]
+                | "if" CombinationBool "then" Expr "else" Expr "fi" [strict(1)]
+                | "while" CombinationBool " loop" Expr "pool"       [strict(1)]
                 | Movements
                 | "readSensor" "(" ")"
+                | Id
                 | Int
-                | Bool
+  
+  syntax BoolExp ::= Expr "<" Expr          [strict]
+                   | Expr ">" Expr          [strict]
+                   | Expr "<=" Expr         [strict]
+                   | Expr ">=" Expr         [strict]
+                   | Expr "==" Expr         [strict]
+                   | Bool
+
+  syntax CombinationBool ::= BoolExp
+                         | BoolExp "and" CombinationBool 
+                         | BoolExp "or" CombinationBool
+                         | Bool
+
+  
 
   syntax Exprs ::= List{Expr,""}
-                  
+  
+  syntax KResult ::= Int | Bool
+
 endmodule
 
 
@@ -30,7 +46,7 @@ module DRONE
   imports DRONE-SYNTAX
 
 
-
+/*
   configuration <T color="yellow">
                   <k color="green"> $PGM:Program </k>
                   <bump color="red"> false </bump>
@@ -46,6 +62,11 @@ module DRONE
 
 
   rule <k> limitSpeed = Int ; limitHeight = Int ; Exprs </k>
+
+  rule I1 * I2 => I1 *Int I2
+  rule I1 / I2 => I1 /Int I2
+  rule I1 + I2 => I1 +Int I2
+  rule I1 <= I2 => I1 <=Int I2
 
   rule <k> Forward Acc </k>
   rule <k> Backward Acc </k>
@@ -72,8 +93,9 @@ module DRONE
   rule <k> while true loop Expr pool </k>
   rule <k> while false loop Expr pool </k>
 
-  /*
+  
                 | "readSensor" "(" ")"
-   */
-
+  
+*/
 endmodule
+ 
