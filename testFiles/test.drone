@@ -1,1 +1,1 @@
- takeoff ; forward, forward,  forward, backward, backward ; land
+takeoff -> forward 1 -> forward 1 -> land ;

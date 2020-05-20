@@ -13,7 +13,7 @@ module DRONE-SYNTAX
                     | "takeoff"
                     | "land"
                     | "Hovering"
-                    > Movement "," Movement  [left]
+                    > Movement "->" Movement  [left]
 
 
   
@@ -55,19 +55,19 @@ module DRONE
                 </T>
 
   //Movement
-  rule  M1:Movement , M2:Movement => M1 ~> M2
+  rule Mv ; => Mv [structural]
+  rule Mv1 -> Mv2 => Mv1 ~> Mv2
 
-  rule takeoff  => .
   rule takeoff => .
-  rule Hovering => .
-  rule land => .
+  rule Hovering  => .
+  rule land  => .
 
-  rule forward N:Int => .
-  rule backward N:Int => .
-  rule lt N:Int => .
-  rule rt N:Int => .
-  rule up N:Int => .
-  rule down N:Int => .
+  rule forward N:Int  => .
+  rule backward N:Int  => .
+  rule lt N:Int  => .
+  rule rt N:Int  => .
+  rule up N:Int  => .
+  rule down N:Int  => .
 
   //AExp
   rule <k> X:Id => I ...</k>
