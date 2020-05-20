@@ -21,3 +21,5 @@ var newone ;
 takeoff -> forward 1 -> forward 1 -> land ;
 
 takeoff-> forward 1 -> backward 1 -> lt 1 -> rt 1 -> up 1 -> down 1 -> land ;
+
+takeoff -> forward 1 -> backward 1 -> lt 1 -> rt 1 -> up 2 -> down 1 -> land ;

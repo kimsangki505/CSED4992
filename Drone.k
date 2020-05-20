@@ -61,7 +61,7 @@ module DRONE
 
   rule <k>takeoff => . ...</k><position>... .Map => ("z" |-> 1) ("x" |-> 0) ("y" |-> 0) ...</position>
   rule <k>Hovering  => . ...</k>
-  rule <k>land  => . ...</k><position>Rho => Rho["z" <- 0]</position>
+  rule <k>land  => . ...</k><position>Rho:Map => .Map</position>
 
   rule <k>forward N:Int  => . ...</k> <position>... "x" |-> (I => I +Int 1) ...</position>
   rule <k>backward N:Int  => . ...</k> <position>... "x" |-> (I => I -Int 1) ...</position>
