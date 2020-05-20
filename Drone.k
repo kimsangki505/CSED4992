@@ -86,7 +86,8 @@ module DRONE
 
   //Block
   rule {} => .   [structural]
-  rule {S} => S  [structural]
+  rule <k> {S} => S ~> Rho ...</k> <env> Rho </env>  [structural]
+  rule <k> Rho => . ...</k> <env> _ => Rho </env>    [structural]
 
 
   //stmt
@@ -105,6 +106,7 @@ module DRONE
   rule <k> var (X,Xs => Xs); ...</k>
        <env> Rho => Rho[X <- !N:Int] </env>
        <store>... .Map => !N |-> 0 ...</store>
+
   rule var .Ids; => .  [structural]
 
 endmodule
