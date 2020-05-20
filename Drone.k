@@ -52,23 +52,24 @@ module DRONE
                   <env color="LightSkyBlue"> .Map </env>
                   <store color="red"> .Map </store>
                   <input color="magenta" stream="stdin"> .List </input>
+                  <position> .Map </position>
                 </T>
 
   //Movement
   rule Mv ; => Mv [structural]
-  rule Mv1 -> Mv2 => Mv1 ~> Mv2
+  rule <k> Mv1 -> Mv2 => Mv1 ~> Mv2 ...</k>
 
-  rule takeoff => .
-  rule Hovering  => .
-  rule land  => .
+  rule <k>takeoff => . ...</k><position>... .Map => ("z" |-> 1) ("x" |-> 0) ("y" |-> 0) ...</position>
+  rule <k>Hovering  => . ...</k>
+  rule <k>land  => . ...</k><position>Rho => Rho["z" <- 0]</position>
 
-  rule forward N:Int  => .
-  rule backward N:Int  => .
-  rule lt N:Int  => .
-  rule rt N:Int  => .
-  rule up N:Int  => .
-  rule down N:Int  => .
-
+  rule <k>forward N:Int  => . ...</k> <position>... "x" |-> (I => I +Int 1) ...</position>
+  rule <k>backward N:Int  => . ...</k> <position>... "x" |-> (I => I -Int 1) ...</position>
+  rule <k>lt N:Int  => . ...</k> <position>... "y" |-> (I => I +Int 1) ...</position>
+  rule <k>rt N:Int  => . ...</k> <position>... "y" |-> (I => I -Int 1) ...</position>
+  rule <k>up N:Int  => . ...</k> <position>... "z" |-> (I => I +Int 1) ...</position>
+  rule <k>down N:Int  => . ...</k> <position>... "z" |-> (I => I -Int 1) ...</position>
+ 
   //AExp
   rule <k> X:Id => I ...</k>
        <env>... X |-> N ...</env>
