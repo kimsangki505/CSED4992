@@ -1,26 +1,32 @@
+    
 module DRONE-SYNTAX
   imports DOMAINS-SYNTAX
-
-  syntax Program ::= "limitSpeed" "=" Int ";" "limitHeight" "=" Int ";" Exprs
   
-  syntax Direction ::= "forward" | "backward" | "left" | "right" | "up" | "down"
+  syntax Pgm ::= Stmt
 
-  syntax Movement ::= Direction Int
+  syntax Movement ::= "forward" Int
+                    | "backward" Int
+                    | "lt" Int
+                    | "rt" Int
+                    | "up" Int
+                    | "down" Int
                     | "takeoff"
                     | "land"
                     | "Hovering"
+                    > Movement "," Movement  [left]
 
-  syntax Movments ::= Movement | Movement "," Movments
+  syntax AExp  ::= Int | Id
 
-  syntax Expr ::= Movments 
-                | Expr "<=" Expr         [strict]
-                | Expr "==" Expr         [strict]
-                | Int
-                | Bool
+  syntax BExp  ::= Bool
+                 | AExp "<=" AExp             [seqstrict] 
 
-  syntax Exprs ::= List{Expr, " "}
+  syntax Block ::= "{" "}"
+                 | "{" Stmt "}"
 
-  syntax KResult ::= Int | Bool
+  syntax Stmt  ::= Movement
+                 //| "if" "(" BExp ")" "then" Block "else" Block "fi" [strict(1)]
+                 //| "while" "(" BExp ")" "loop" Block "pool"
+                 > Stmt Stmt                                        [left]
 
 endmodule
 
@@ -29,29 +35,18 @@ module DRONE
   imports DOMAINS
   imports DRONE-SYNTAX
 
+  syntax KResult ::= Int | Bool
+
   configuration <T color="yellow">
-                  <k color="green"> $PGM:Program </k>
-                  <takeoffAndLand> false </takeoffAndLand>
-                  <bump color="red"> false </bump>
-                  <limitspeed color="magenta"> 0 </limitspeed>
-                  <limitheight color="magenta"> 0 </limitheight>
+                  <k color="green"> $PGM:Pgm </k>
                   <xPos color="white"> 0 </xPos>
                   <yPos color="white"> 0  </yPos>
-                  <xSpeed color="blue"> 0  </xSpeed>
-                  <ySpeed color="blue"> 0 </ySpeed>
-                  <xAcc color="orange"> 0 </xAcc>
-                  <yAcc color="orange"> 0 </yAcc>
                 </T>
 
 
-  rule <k> limitSpeed = LS ; limitHeight = LH ; Exs => Exs </k>
-       <limitspeed> 0 => LS </limitspeed>
-       <limitheight> 0 => LH </limitheight>
+  rule S1:Stmt S2:Stmt => S1 ~> S2  [structural]
 
-
-
-  rule I1 <= I2 => I1 <=Int I2
-  rule I1 == I2 => I1 <=Int I2
-
-endmodule
+  rule M1:Movement , M2:Movement => M1 ~> M2 [structural]
  
+  rule takeoff => .
+endmodule
