@@ -1,1 +1,2 @@
- takeoff ; forward, forward ; land
+limitSpeed = 10 ;
+limitHeight = 10 ;
